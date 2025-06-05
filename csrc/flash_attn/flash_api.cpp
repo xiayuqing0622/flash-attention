@@ -1178,7 +1178,7 @@ mha_varlen_bwd(const at::Tensor &dout,  // total_q x num_heads, x head_size
     const int total_q = sizes[0];
     const int batch_size = cu_seqlens_q.numel() - 1;
     const int num_heads = sizes[1];
-    const int head_size_og = dout.size(2);
+    const int head_size_og = sizes[2];
     const int head_size = sizes[2];
     const int total_k = k.size(0);
     const int num_heads_k = k.size(1);
@@ -1210,7 +1210,7 @@ mha_varlen_bwd(const at::Tensor &dout,  // total_q x num_heads, x head_size
     CHECK_SHAPE(k, total_k, num_heads_k, head_size);
     CHECK_SHAPE(v, total_k, num_heads_v, v_head_size_og);
     CHECK_SHAPE(out, total_q, num_heads, v_head_size_og);
-    CHECK_SHAPE(dout, total_q, num_heads, head_size_og);
+    CHECK_SHAPE(dout, total_q, num_heads, v_head_size_og);
     CHECK_SHAPE(cu_seqlens_q, batch_size + 1);
     CHECK_SHAPE(cu_seqlens_k, batch_size + 1);
 
